@@ -14,8 +14,9 @@ class TestGame:
 
     def test_is_valid(self):
         game = Game()
-        grid = game.grid
-        word = ''.join(random.sample(grid, 5))
+        grid = 'ABCDEFGHN'
+        word = 'BANANA'
+        game.grid = list(grid)
         assert game.is_valid(word) == True
 
     def test_is_valid_wrong_input(self):

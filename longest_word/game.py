@@ -2,6 +2,8 @@
 # pylint: disable=too-few-public-methods
 import random
 import string
+import requests
+import json
 
 class Game:
     """Class that implements Longest word game"""
@@ -11,4 +13,14 @@ class Game:
 
     def is_valid(self, word: str) -> bool:
         """Return True if and only if the word is valid, given the Game's grid"""
-        return all(letter in self.grid for letter in word)
+        return self.__in_grid(self.grid, word) and self.__in_dictionary(word)
+
+
+    @staticmethod
+    def __in_grid(grid: list, word: str) -> bool:
+        return all(letter in grid for letter in word)
+
+    @staticmethod
+    def __in_dictionary(word: str) -> bool:
+        response = requests.get(f"https://wagon-dictionary.herokuapp.com/{word}").json()
+        return response['found']
